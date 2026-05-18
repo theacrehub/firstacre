@@ -1,0 +1,1426 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>FirstAcre — Your Slice of South Carolina</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Outfit:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --forest: #1d3a2e;
+    --forest-deep: #0f2419;
+    --sage: #6b8e6f;
+    --sage-light: #a8c0a3;
+    --gold: #e8a838;
+    --gold-warm: #d68d1f;
+    --sunrise: #f4c875;
+    --sky: #e8eee4;
+    --cream: #faf7f0;
+    --paper: #fefcf7;
+    --ink: #142019;
+    --muted: #5a6b5e;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+
+  body {
+    font-family: 'Outfit', sans-serif;
+    background: var(--paper);
+    color: var(--ink);
+    line-height: 1.5;
+    -webkit-font-smoothing: antialiased;
+    overflow-x: hidden;
+  }
+
+  .italic-serif {
+    font-family: 'Instrument Serif', serif;
+    font-style: italic;
+    font-weight: 400;
+  }
+
+  /* Sun decoration in hero */
+  .sun-decoration {
+    position: absolute;
+    top: -200px;
+    right: -200px;
+    width: 700px;
+    height: 700px;
+    background: radial-gradient(circle, var(--sunrise) 0%, var(--gold) 30%, transparent 70%);
+    border-radius: 50%;
+    opacity: 0.35;
+    pointer-events: none;
+    z-index: 0;
+    animation: sunRise 1.5s ease-out;
+  }
+
+  @keyframes sunRise {
+    from { transform: translateY(100px); opacity: 0; }
+    to { transform: translateY(0); opacity: 0.35; }
+  }
+
+  /* Nav */
+  nav {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    padding: 20px 48px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    z-index: 100;
+    background: rgba(254, 252, 247, 0.9);
+    backdrop-filter: blur(16px);
+    transition: box-shadow 0.3s;
+  }
+
+  nav.scrolled {
+    box-shadow: 0 1px 0 rgba(20, 32, 25, 0.06);
+  }
+
+  .logo {
+    font-family: 'Outfit', sans-serif;
+    font-weight: 700;
+    font-size: 22px;
+    letter-spacing: -0.03em;
+    color: var(--ink);
+    text-decoration: none;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+
+  .logo-icon {
+    width: 30px;
+    height: 30px;
+    background: var(--forest);
+    border-radius: 50%;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .logo-icon::before {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 14px;
+    height: 14px;
+    background: var(--gold);
+    border-radius: 50%;
+    transform: translate(-50%, -20%);
+  }
+
+  .nav-links {
+    display: flex;
+    gap: 32px;
+    align-items: center;
+  }
+
+  .nav-link {
+    color: var(--ink);
+    text-decoration: none;
+    font-size: 14px;
+    font-weight: 500;
+  }
+
+  .nav-cta {
+    background: var(--forest);
+    color: var(--cream);
+    padding: 12px 24px;
+    border-radius: 100px;
+    text-decoration: none;
+    font-size: 14px;
+    font-weight: 600;
+    transition: all 0.2s;
+  }
+
+  .nav-cta:hover {
+    background: var(--forest-deep);
+    transform: translateY(-1px);
+  }
+
+  /* Hero */
+  .hero {
+    min-height: 100vh;
+    padding: 120px 48px 80px;
+    position: relative;
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+  }
+
+  .hero-content {
+    max-width: 1300px;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: 1.2fr 1fr;
+    gap: 80px;
+    align-items: center;
+    width: 100%;
+    position: relative;
+    z-index: 2;
+  }
+
+  .hero-tag {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    background: var(--sky);
+    color: var(--forest);
+    padding: 8px 16px;
+    border-radius: 100px;
+    font-size: 13px;
+    font-weight: 600;
+    margin-bottom: 32px;
+    opacity: 0;
+    animation: fadeUp 0.8s 0.1s forwards;
+  }
+
+  .hero-tag-dot {
+    width: 8px;
+    height: 8px;
+    background: var(--gold);
+    border-radius: 50%;
+    animation: ping 2s infinite;
+  }
+
+  @keyframes ping {
+    0%, 100% { transform: scale(1); opacity: 1; }
+    50% { transform: scale(1.4); opacity: 0.6; }
+  }
+
+  .hero h1 {
+    font-size: clamp(56px, 8vw, 108px);
+    line-height: 0.92;
+    letter-spacing: -0.04em;
+    font-weight: 600;
+    margin-bottom: 32px;
+    opacity: 0;
+    animation: fadeUp 1s 0.2s forwards;
+    color: var(--ink);
+  }
+
+  .hero h1 .italic-serif {
+    font-size: 1.05em;
+    color: var(--forest);
+    display: inline-block;
+    margin-right: 0.05em;
+  }
+
+  .hero h1 .gold-highlight {
+    color: var(--gold-warm);
+  }
+
+  .hero-sub {
+    font-size: 21px;
+    line-height: 1.45;
+    color: var(--muted);
+    max-width: 540px;
+    margin-bottom: 40px;
+    opacity: 0;
+    animation: fadeUp 1s 0.3s forwards;
+    font-weight: 400;
+  }
+
+  .hero-sub strong {
+    color: var(--ink);
+    font-weight: 600;
+  }
+
+  .hero-benefits {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 14px 24px;
+    margin-bottom: 40px;
+    max-width: 540px;
+    opacity: 0;
+    animation: fadeUp 1s 0.4s forwards;
+  }
+
+  .benefit {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    font-size: 15px;
+    font-weight: 500;
+    color: var(--ink);
+  }
+
+  .benefit-check {
+    width: 24px;
+    height: 24px;
+    flex-shrink: 0;
+    background: var(--forest);
+    color: var(--gold);
+    border-radius: 6px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .benefit-check svg {
+    width: 14px;
+    height: 14px;
+  }
+
+  .hero-cta-row {
+    display: flex;
+    gap: 16px;
+    align-items: center;
+    opacity: 0;
+    animation: fadeUp 1s 0.5s forwards;
+  }
+
+  .primary-btn {
+    background: var(--forest);
+    color: var(--cream);
+    padding: 18px 32px;
+    border-radius: 100px;
+    text-decoration: none;
+    font-size: 16px;
+    font-weight: 600;
+    transition: all 0.2s;
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    border: none;
+    cursor: pointer;
+    font-family: inherit;
+  }
+
+  .primary-btn:hover {
+    background: var(--forest-deep);
+    transform: translateY(-2px);
+    box-shadow: 0 20px 40px -10px rgba(15, 36, 25, 0.3);
+  }
+
+  .primary-btn svg {
+    transition: transform 0.2s;
+  }
+
+  .primary-btn:hover svg {
+    transform: translateX(4px);
+  }
+
+  .hero-rating {
+    font-size: 14px;
+    color: var(--muted);
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+
+  .stars {
+    color: var(--gold-warm);
+    letter-spacing: 2px;
+    font-size: 14px;
+  }
+
+  /* Hero image / visual side */
+  .hero-visual {
+    position: relative;
+    opacity: 0;
+    animation: fadeUp 1s 0.4s forwards;
+  }
+
+  .hero-card-stack {
+    position: relative;
+    height: 540px;
+  }
+
+  .land-card {
+    position: absolute;
+    background: var(--forest);
+    color: var(--cream);
+    border-radius: 24px;
+    padding: 28px;
+    box-shadow: 0 30px 60px -20px rgba(15, 36, 25, 0.4);
+    width: 280px;
+    overflow: hidden;
+  }
+
+  .land-card.front {
+    top: 60px;
+    right: 0;
+    z-index: 3;
+    transform: rotate(2deg);
+    background: var(--paper);
+    color: var(--ink);
+    border: 1px solid var(--sky);
+  }
+
+  .land-card.middle {
+    top: 30px;
+    right: 80px;
+    z-index: 2;
+    transform: rotate(-3deg);
+    background: var(--sage);
+    color: var(--cream);
+  }
+
+  .land-card.back {
+    top: 0;
+    right: 150px;
+    z-index: 1;
+    transform: rotate(5deg);
+  }
+
+  .card-image {
+    width: 100%;
+    height: 140px;
+    border-radius: 12px;
+    margin-bottom: 16px;
+    background: linear-gradient(180deg, var(--sage-light) 0%, var(--sage) 60%, var(--forest) 100%);
+    position: relative;
+    overflow: hidden;
+  }
+
+  .card-image::before {
+    content: '';
+    position: absolute;
+    top: 20%;
+    right: 20%;
+    width: 50px;
+    height: 50px;
+    background: var(--sunrise);
+    border-radius: 50%;
+    box-shadow: 0 0 60px var(--gold);
+  }
+
+  .card-image::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 40%;
+    background: linear-gradient(180deg, transparent, rgba(15, 36, 25, 0.4));
+  }
+
+  .land-card.front .card-image {
+    background: linear-gradient(180deg, #d4a566 0%, #b8854a 50%, #8b5e3c 100%);
+  }
+
+  .land-card.front .card-image::before {
+    background: var(--sunrise);
+    box-shadow: 0 0 50px rgba(244, 200, 117, 0.8);
+  }
+
+  .land-card.middle .card-image {
+    background: linear-gradient(180deg, #b9d4a8 0%, #6b8e6f 60%, #2d4a35 100%);
+  }
+
+  .card-label {
+    font-size: 11px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--gold);
+    margin-bottom: 6px;
+    font-weight: 600;
+  }
+
+  .land-card.front .card-label {
+    color: var(--gold-warm);
+  }
+
+  .card-title {
+    font-size: 19px;
+    font-weight: 600;
+    margin-bottom: 8px;
+    letter-spacing: -0.01em;
+  }
+
+  .card-detail {
+    display: flex;
+    justify-content: space-between;
+    font-size: 13px;
+    opacity: 0.8;
+  }
+
+  .land-card.front .card-detail {
+    color: var(--muted);
+    opacity: 1;
+  }
+
+  /* Floating badge */
+  .floating-badge {
+    position: absolute;
+    bottom: 20px;
+    left: -20px;
+    background: var(--gold);
+    color: var(--ink);
+    padding: 12px 18px;
+    border-radius: 100px;
+    font-size: 13px;
+    font-weight: 700;
+    z-index: 4;
+    box-shadow: 0 10px 30px -5px rgba(216, 141, 31, 0.4);
+    animation: bobble 3s ease-in-out infinite;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+
+  @keyframes bobble {
+    0%, 100% { transform: translateY(0) rotate(-3deg); }
+    50% { transform: translateY(-8px) rotate(-3deg); }
+  }
+
+  /* Sections */
+  section {
+    padding: 100px 48px;
+    position: relative;
+  }
+
+  .container {
+    max-width: 1200px;
+    margin: 0 auto;
+  }
+
+  /* Vision section */
+  .vision {
+    background: var(--forest);
+    color: var(--cream);
+    text-align: center;
+    overflow: hidden;
+    position: relative;
+  }
+
+  .vision::before {
+    content: '';
+    position: absolute;
+    top: -100px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 600px;
+    height: 300px;
+    background: radial-gradient(ellipse, rgba(232, 168, 56, 0.15) 0%, transparent 70%);
+    pointer-events: none;
+  }
+
+  .vision-eyebrow {
+    font-size: 13px;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--gold);
+    font-weight: 600;
+    margin-bottom: 24px;
+  }
+
+  .vision h2 {
+    font-size: clamp(40px, 6vw, 80px);
+    line-height: 1.05;
+    letter-spacing: -0.03em;
+    font-weight: 600;
+    margin-bottom: 32px;
+    max-width: 900px;
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  .vision h2 .italic-serif {
+    color: var(--gold);
+    font-size: 1.1em;
+  }
+
+  .vision-sub {
+    font-size: 20px;
+    max-width: 680px;
+    margin: 0 auto;
+    color: rgba(250, 247, 240, 0.75);
+    line-height: 1.55;
+  }
+
+  /* Lifestyle grid */
+  .lifestyle {
+    background: var(--paper);
+  }
+
+  .lifestyle-header {
+    text-align: center;
+    margin-bottom: 72px;
+  }
+
+  .section-eyebrow {
+    font-size: 12px;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--gold-warm);
+    font-weight: 700;
+    margin-bottom: 16px;
+  }
+
+  .section-title {
+    font-size: clamp(36px, 5vw, 60px);
+    line-height: 1.05;
+    letter-spacing: -0.03em;
+    font-weight: 600;
+    max-width: 800px;
+    margin: 0 auto;
+  }
+
+  .section-title .italic-serif {
+    color: var(--forest);
+    font-size: 1.05em;
+  }
+
+  .lifestyle-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 24px;
+  }
+
+  .lifestyle-card {
+    background: var(--cream);
+    border-radius: 24px;
+    padding: 36px 32px;
+    transition: transform 0.3s, box-shadow 0.3s;
+    border: 1px solid transparent;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .lifestyle-card:hover {
+    transform: translateY(-6px);
+    box-shadow: 0 30px 60px -20px rgba(20, 32, 25, 0.15);
+    border-color: var(--sky);
+  }
+
+  .lifestyle-icon {
+    width: 56px;
+    height: 56px;
+    background: var(--forest);
+    border-radius: 16px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--gold);
+    margin-bottom: 24px;
+  }
+
+  .lifestyle-card h3 {
+    font-size: 24px;
+    font-weight: 600;
+    margin-bottom: 12px;
+    letter-spacing: -0.01em;
+  }
+
+  .lifestyle-card p {
+    font-size: 15px;
+    color: var(--muted);
+    line-height: 1.6;
+  }
+
+  /* Process section */
+  .process {
+    background: var(--sky);
+    position: relative;
+    overflow: hidden;
+  }
+
+  .process-flow {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 0;
+    margin-top: 72px;
+    position: relative;
+  }
+
+  .process-flow::before {
+    content: '';
+    position: absolute;
+    top: 30px;
+    left: 12%;
+    right: 12%;
+    height: 2px;
+    background: repeating-linear-gradient(90deg, var(--sage) 0 8px, transparent 8px 16px);
+    z-index: 0;
+  }
+
+  .process-step {
+    text-align: center;
+    position: relative;
+    padding: 0 12px;
+    z-index: 1;
+  }
+
+  .process-num {
+    width: 60px;
+    height: 60px;
+    background: var(--paper);
+    border: 2px solid var(--forest);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 auto 24px;
+    font-size: 20px;
+    font-weight: 700;
+    color: var(--forest);
+    font-family: 'Outfit', sans-serif;
+  }
+
+  .process-step h4 {
+    font-size: 19px;
+    font-weight: 600;
+    margin-bottom: 8px;
+    letter-spacing: -0.01em;
+  }
+
+  .process-step p {
+    font-size: 14px;
+    color: var(--muted);
+    line-height: 1.55;
+  }
+
+  /* Form section */
+  .form-section {
+    background: var(--paper);
+    padding: 120px 48px;
+  }
+
+  .form-wrapper {
+    max-width: 1100px;
+    margin: 0 auto;
+    background: var(--forest);
+    border-radius: 32px;
+    padding: 64px;
+    color: var(--cream);
+    position: relative;
+    overflow: hidden;
+  }
+
+  .form-wrapper::before {
+    content: '';
+    position: absolute;
+    top: -150px;
+    right: -150px;
+    width: 400px;
+    height: 400px;
+    background: radial-gradient(circle, var(--gold) 0%, transparent 70%);
+    opacity: 0.2;
+    pointer-events: none;
+  }
+
+  .form-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 64px;
+    position: relative;
+    z-index: 2;
+  }
+
+  .form-pitch h2 {
+    font-size: clamp(32px, 4vw, 48px);
+    line-height: 1.05;
+    letter-spacing: -0.02em;
+    font-weight: 600;
+    margin-bottom: 24px;
+  }
+
+  .form-pitch h2 .italic-serif {
+    color: var(--gold);
+    font-size: 1.1em;
+  }
+
+  .form-pitch p {
+    font-size: 17px;
+    color: rgba(250, 247, 240, 0.75);
+    line-height: 1.6;
+    margin-bottom: 32px;
+  }
+
+  .form-perks {
+    list-style: none;
+    padding: 0;
+  }
+
+  .form-perks li {
+    display: flex;
+    align-items: flex-start;
+    gap: 12px;
+    margin-bottom: 16px;
+    font-size: 15px;
+    color: rgba(250, 247, 240, 0.9);
+  }
+
+  .form-perks svg {
+    color: var(--gold);
+    flex-shrink: 0;
+    margin-top: 3px;
+  }
+
+  /* Form */
+  .form-card {
+    background: rgba(250, 247, 240, 0.05);
+    border: 1px solid rgba(250, 247, 240, 0.1);
+    border-radius: 20px;
+    padding: 36px;
+    backdrop-filter: blur(10px);
+  }
+
+  .form-group {
+    margin-bottom: 18px;
+  }
+
+  .form-group label {
+    display: block;
+    font-size: 11px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: rgba(250, 247, 240, 0.5);
+    margin-bottom: 6px;
+    font-weight: 600;
+  }
+
+  .form-group input,
+  .form-group select {
+    width: 100%;
+    background: rgba(250, 247, 240, 0.06);
+    border: 1px solid rgba(250, 247, 240, 0.15);
+    border-radius: 10px;
+    padding: 12px 14px;
+    color: var(--cream);
+    font-size: 15px;
+    font-family: inherit;
+    transition: all 0.2s;
+  }
+
+  .form-group input:focus,
+  .form-group select:focus {
+    outline: none;
+    border-color: var(--gold);
+    background: rgba(250, 247, 240, 0.1);
+  }
+
+  .form-group select {
+    appearance: none;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath fill='%23faf7f0' d='M6 8L0 0h12z'/%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: right 14px center;
+    cursor: pointer;
+  }
+
+  .form-group select option {
+    background: var(--forest-deep);
+    color: var(--cream);
+  }
+
+  .form-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
+  }
+
+  .form-submit {
+    width: 100%;
+    background: var(--gold);
+    color: var(--ink);
+    border: none;
+    padding: 18px;
+    font-size: 16px;
+    font-weight: 700;
+    border-radius: 12px;
+    cursor: pointer;
+    margin-top: 10px;
+    transition: all 0.2s;
+    font-family: inherit;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+  }
+
+  .form-submit:hover {
+    background: var(--gold-warm);
+    transform: translateY(-1px);
+  }
+
+  .form-fine {
+    font-size: 11px;
+    color: rgba(250, 247, 240, 0.45);
+    margin-top: 14px;
+    text-align: center;
+  }
+
+  /* Testimonial */
+  .testimonial {
+    background: var(--cream);
+    text-align: center;
+  }
+
+  .testimonial-quote {
+    font-family: 'Instrument Serif', serif;
+    font-style: italic;
+    font-size: clamp(28px, 3.5vw, 44px);
+    line-height: 1.25;
+    letter-spacing: -0.01em;
+    max-width: 900px;
+    margin: 32px auto 40px;
+    color: var(--ink);
+  }
+
+  .testimonial-quote::before {
+    content: '"';
+    color: var(--gold-warm);
+    font-size: 1.5em;
+    line-height: 0;
+    vertical-align: -0.3em;
+    margin-right: 0.05em;
+  }
+
+  .testimonial-author {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 16px;
+  }
+
+  .author-avatar {
+    width: 56px;
+    height: 56px;
+    background: linear-gradient(135deg, var(--sage) 0%, var(--forest) 100%);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--cream);
+    font-weight: 700;
+    font-size: 18px;
+  }
+
+  .author-info {
+    text-align: left;
+  }
+
+  .author-name {
+    font-weight: 600;
+    font-size: 16px;
+  }
+
+  .author-detail {
+    font-size: 13px;
+    color: var(--muted);
+  }
+
+  /* Final CTA */
+  .final {
+    background: var(--gold);
+    text-align: center;
+    padding: 100px 48px;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .final::before {
+    content: '';
+    position: absolute;
+    bottom: -200px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 800px;
+    height: 400px;
+    background: radial-gradient(ellipse, var(--sunrise) 0%, transparent 70%);
+    opacity: 0.5;
+    pointer-events: none;
+  }
+
+  .final h2 {
+    font-size: clamp(40px, 6vw, 80px);
+    line-height: 1;
+    letter-spacing: -0.03em;
+    font-weight: 600;
+    margin-bottom: 20px;
+    color: var(--ink);
+    position: relative;
+  }
+
+  .final h2 .italic-serif {
+    color: var(--forest);
+    font-size: 1.05em;
+  }
+
+  .final p {
+    font-size: 19px;
+    max-width: 580px;
+    margin: 0 auto 32px;
+    color: rgba(20, 32, 25, 0.7);
+    position: relative;
+  }
+
+  .final-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 12px;
+    background: var(--forest);
+    color: var(--cream);
+    padding: 20px 36px;
+    text-decoration: none;
+    font-size: 16px;
+    font-weight: 600;
+    border-radius: 100px;
+    transition: all 0.2s;
+    position: relative;
+  }
+
+  .final-btn:hover {
+    background: var(--forest-deep);
+    transform: translateY(-2px);
+    box-shadow: 0 20px 40px -10px rgba(15, 36, 25, 0.4);
+  }
+
+  /* Footer */
+  footer {
+    background: var(--forest-deep);
+    color: rgba(250, 247, 240, 0.6);
+    padding: 40px 48px;
+    text-align: center;
+    font-size: 13px;
+  }
+
+  footer a {
+    color: var(--gold);
+    text-decoration: none;
+  }
+
+  /* Animations */
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(30px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  .reveal {
+    opacity: 0;
+    transform: translateY(30px);
+    transition: opacity 0.8s, transform 0.8s;
+  }
+
+  .reveal.visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  /* Mobile */
+  @media (max-width: 968px) {
+    nav { padding: 16px 24px; }
+    .nav-links .nav-link { display: none; }
+    .hero { padding: 100px 24px 60px; }
+    .hero-content { grid-template-columns: 1fr; gap: 60px; }
+    .hero-visual { display: none; }
+    section { padding: 70px 24px; }
+    .lifestyle-grid { grid-template-columns: 1fr; gap: 16px; }
+    .process-flow { grid-template-columns: 1fr 1fr; gap: 40px 16px; }
+    .process-flow::before { display: none; }
+    .form-section { padding: 80px 24px; }
+    .form-wrapper { padding: 40px 28px; border-radius: 24px; }
+    .form-grid { grid-template-columns: 1fr; gap: 40px; }
+    .final { padding: 70px 24px; }
+    .form-row { grid-template-columns: 1fr; }
+    .hero-cta-row { flex-direction: column; align-items: flex-start; gap: 20px; }
+    .sun-decoration { width: 400px; height: 400px; top: -100px; right: -150px; }
+  }
+
+  @media (max-width: 540px) {
+    .hero-benefits { grid-template-columns: 1fr; }
+    .process-flow { grid-template-columns: 1fr; gap: 40px; }
+  }
+
+  /* Success state */
+  .success-state {
+    text-align: center;
+    padding: 30px 0;
+  }
+
+  .success-state.hidden { display: none; }
+  .form-content.hidden { display: none; }
+
+  .success-icon {
+    width: 64px;
+    height: 64px;
+    background: var(--gold);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 auto 20px;
+    color: var(--ink);
+  }
+
+  .success-state h3 {
+    font-size: 26px;
+    font-weight: 600;
+    margin-bottom: 10px;
+  }
+
+  .success-state p {
+    color: rgba(250, 247, 240, 0.7);
+    font-size: 15px;
+  }
+</style>
+</head>
+<body>
+
+<nav id="nav">
+  <a href="#" class="logo">
+    <span class="logo-icon"></span>
+    <span>FirstAcre</span>
+  </a>
+  <div class="nav-links">
+    <a href="#vision" class="nav-link">The Vision</a>
+    <a href="#how" class="nav-link">How It Works</a>
+    <a href="#waitlist" class="nav-cta">Claim Your Spot</a>
+  </div>
+</nav>
+
+<!-- Hero -->
+<section class="hero">
+  <div class="sun-decoration"></div>
+  <div class="hero-content">
+    <div>
+      <div class="hero-tag">
+        <span class="hero-tag-dot"></span>
+        Now welcoming founding members
+      </div>
+      <h1>
+        Imagine waking up<br>
+        on <span class="italic-serif">your own</span><br>
+        <span class="gold-highlight">slice of</span> South Carolina.
+      </h1>
+      <p class="hero-sub">
+        Parcels from <strong>0.5 to 5+ acres</strong> — inside and outside city limits. Build your homestead, plant your roots, or just hold a piece of the Lowcountry. FirstAcre members get the call before anyone else.
+      </p>
+
+      <div class="hero-benefits">
+        <div class="benefit">
+          <span class="benefit-check"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></span>
+          Discounted Lots
+        </div>
+        <div class="benefit">
+          <span class="benefit-check"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></span>
+          Seller Financing
+        </div>
+        <div class="benefit">
+          <span class="benefit-check"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></span>
+          No Credit Checks
+        </div>
+        <div class="benefit">
+          <span class="benefit-check"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></span>
+          No Prepayment Penalty
+        </div>
+        <div class="benefit">
+          <span class="benefit-check"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></span>
+          No Title Issues
+        </div>
+        <div class="benefit">
+          <span class="benefit-check"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></span>
+          No Hassle
+        </div>
+      </div>
+
+      <div class="hero-cta-row">
+        <a href="#waitlist" class="primary-btn">
+          Claim your spot — free
+          <svg width="18" height="14" viewBox="0 0 18 14" fill="none">
+            <path d="M1 7h15m0 0L10 1m6 6l-6 6" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+          </svg>
+        </a>
+        <div class="hero-rating">
+          <span class="stars">★★★★★</span>
+          <span>Trusted by 600+ landowners</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="hero-visual">
+      <div class="hero-card-stack">
+        <div class="land-card back">
+          <div class="card-image"></div>
+          <div class="card-label">SC · Wooded</div>
+          <div class="card-title">3.2-acre tract</div>
+          <div class="card-detail">
+            <span>Member preview</span>
+            <span>Seller fin.</span>
+          </div>
+        </div>
+        <div class="land-card middle">
+          <div class="card-image"></div>
+          <div class="card-label">SC · Open pasture</div>
+          <div class="card-title">1.5-acre lot</div>
+          <div class="card-detail">
+            <span>Coming soon</span>
+            <span>$0 down</span>
+          </div>
+        </div>
+        <div class="land-card front">
+          <div class="card-image"></div>
+          <div class="card-label">SC · Inside city</div>
+          <div class="card-title">0.75-acre lot</div>
+          <div class="card-detail">
+            <span>Forming</span>
+            <span>Low monthly</span>
+          </div>
+        </div>
+        <div class="floating-badge">
+          ✦ First access only
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Vision -->
+<section class="vision" id="vision">
+  <div class="container">
+    <div class="reveal">
+      <div class="vision-eyebrow">The FirstAcre Vision</div>
+      <h2>Land isn't just dirt. It's the start of <span class="italic-serif">everything else.</span></h2>
+      <p class="vision-sub">A home. A homestead. A weekend escape. A legacy for your kids. Whatever you're building, it starts with a single acre. We help you find yours — at a price that doesn't lock you out.</p>
+    </div>
+  </div>
+</section>
+
+<!-- Lifestyle -->
+<section class="lifestyle">
+  <div class="container">
+    <div class="lifestyle-header reveal">
+      <div class="section-eyebrow">What people do with their FirstAcre</div>
+      <h2 class="section-title">Three lives, <span class="italic-serif">one starting point.</span></h2>
+    </div>
+
+    <div class="lifestyle-grid">
+      <div class="lifestyle-card reveal">
+        <div class="lifestyle-icon">
+          <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/>
+            <polyline points="9 22 9 12 15 12 15 22"/>
+          </svg>
+        </div>
+        <h3>Build a home.</h3>
+        <p>Pick your spot, take your time. With seller financing and no prepayment penalty, you can hold the land while you save, plan, and build at your pace.</p>
+      </div>
+
+      <div class="lifestyle-card reveal">
+        <div class="lifestyle-icon">
+          <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M2 12s3-7 10-7 10 7 10 7-3 7-10 7-10-7-10-7z"/>
+            <circle cx="12" cy="12" r="3"/>
+          </svg>
+        </div>
+        <h3>Start a homestead.</h3>
+        <p>Chickens. Garden. Maybe a small herd. SC has the soil, the climate, and the freedom — and most of our parcels have no HOA, no neighborhood rules, no permission needed.</p>
+      </div>
+
+      <div class="lifestyle-card reveal">
+        <div class="lifestyle-icon">
+          <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M12 2v20M5 12l7-10 7 10"/>
+          </svg>
+        </div>
+        <h3>Hold for the future.</h3>
+        <p>Land is patient money. Buy now at a member price, hold for a few years, build later — or pass it to your kids. The land doesn't go anywhere.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Process -->
+<section class="process" id="how">
+  <div class="container">
+    <div class="lifestyle-header reveal">
+      <div class="section-eyebrow">How FirstAcre works</div>
+      <h2 class="section-title">From <span class="italic-serif">interested</span> to <span class="italic-serif">deeded</span> — four steps.</h2>
+    </div>
+
+    <div class="process-flow">
+      <div class="process-step reveal">
+        <div class="process-num">1</div>
+        <h4>Join the list</h4>
+        <p>Tell us what you're looking for. Two minutes, no commitment.</p>
+      </div>
+      <div class="process-step reveal">
+        <div class="process-num">2</div>
+        <h4>Get the call</h4>
+        <p>When a parcel matches, we call you before it goes public.</p>
+      </div>
+      <div class="process-step reveal">
+        <div class="process-num">3</div>
+        <h4>Tour the land</h4>
+        <p>Walk it. See it. Make sure it's yours before you commit.</p>
+      </div>
+      <div class="process-step reveal">
+        <div class="process-num">4</div>
+        <h4>Sign & own</h4>
+        <p>Seller financing or cash. Title insured. Deed in your name.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Testimonial -->
+<section class="testimonial">
+  <div class="container reveal">
+    <div class="section-eyebrow">From a recent member</div>
+    <p class="testimonial-quote">I'd been looking for a couple acres in SC for over a year. FirstAcre called me about a 2-acre lot in week three. I bought it, started clearing it that fall, and I'll break ground next spring."</p>
+    <div class="testimonial-author">
+      <div class="author-avatar">DH</div>
+      <div class="author-info">
+        <div class="author-name">Derek H.</div>
+        <div class="author-detail">FirstAcre Member · Charlotte, NC</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Form / waitlist -->
+<section class="form-section" id="waitlist">
+  <div class="form-wrapper">
+    <div class="form-grid">
+      <div class="form-pitch">
+        <div style="display: inline-flex; align-items: center; gap: 8px; background: rgba(232, 168, 56, 0.15); color: var(--gold); padding: 6px 14px; border-radius: 100px; font-size: 12px; font-weight: 600; margin-bottom: 24px; letter-spacing: 0.05em;">
+          ✦ Free · No commitment
+        </div>
+        <h2>Claim <span class="italic-serif">your spot.</span></h2>
+        <p>Membership is free. We only call when we find something that fits what you're actually looking for.</p>
+        <ul class="form-perks">
+          <li>
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+            First access to every new parcel
+          </li>
+          <li>
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+            Member-only pricing on every property
+          </li>
+          <li>
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+            Seller financing — no banks, no credit checks
+          </li>
+          <li>
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+            Zero spam. We only reach out when we have a match.
+          </li>
+        </ul>
+      </div>
+
+      <div class="form-card">
+        <div class="form-content" id="formContent">
+          <form id="waitlistForm">
+            <div class="form-row">
+              <div class="form-group">
+                <label for="firstName">First name</label>
+                <input type="text" id="firstName" required>
+              </div>
+              <div class="form-group">
+                <label for="lastName">Last name</label>
+                <input type="text" id="lastName" required>
+              </div>
+            </div>
+            <div class="form-group">
+              <label for="email">Email</label>
+              <input type="email" id="email" required>
+            </div>
+            <div class="form-group">
+              <label for="phone">Phone</label>
+              <input type="tel" id="phone" required>
+            </div>
+            <div class="form-row">
+              <div class="form-group">
+                <label for="acres">Target size</label>
+                <select id="acres" required>
+                  <option value="">Select…</option>
+                  <option>0.5 – 1 acre</option>
+                  <option>1 – 2 acres</option>
+                  <option>2 – 3 acres</option>
+                  <option>3 – 5 acres</option>
+                  <option>5+ acres</option>
+                </select>
+              </div>
+              <div class="form-group">
+                <label for="budget">Budget</label>
+                <select id="budget" required>
+                  <option value="">Select…</option>
+                  <option>Under $25K</option>
+                  <option>$25K – $50K</option>
+                  <option>$50K – $100K</option>
+                  <option>$100K – $250K</option>
+                  <option>$250K+</option>
+                </select>
+              </div>
+            </div>
+            <div class="form-group">
+              <label for="vision">What's the dream?</label>
+              <select id="vision" required>
+                <option value="">Select…</option>
+                <option>Build a home</option>
+                <option>Start a homestead</option>
+                <option>Weekend / recreational</option>
+                <option>Hold as investment</option>
+                <option>Still figuring it out</option>
+              </select>
+            </div>
+            <button type="submit" class="form-submit">
+              Claim my spot
+              <svg width="18" height="14" viewBox="0 0 18 14" fill="none">
+                <path d="M1 7h15m0 0L10 1m6 6l-6 6" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"/>
+              </svg>
+            </button>
+            <p class="form-fine">Free forever. Unsubscribe anytime.</p>
+          </form>
+        </div>
+
+        <div class="success-state hidden" id="successState">
+          <div class="success-icon">
+            <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
+              <polyline points="20 6 9 17 4 12"/>
+            </svg>
+          </div>
+          <h3>You're in.</h3>
+          <p>Welcome to FirstAcre. We'll be in touch the moment something fits.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Final CTA -->
+<section class="final">
+  <h2>Your first acre <span class="italic-serif">is out there.</span></h2>
+  <p>Don't wait until the right one is already gone. Join FirstAcre — it's free.</p>
+  <a href="#waitlist" class="final-btn">
+    Claim your spot now
+    <svg width="18" height="14" viewBox="0 0 18 14" fill="none">
+      <path d="M1 7h15m0 0L10 1m6 6l-6 6" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"/>
+    </svg>
+  </a>
+</section>
+
+<footer>
+  <p>© 2026 FirstAcre · A GoldSoil Realty Investments brand · <a href="#">Privacy</a> · <a href="#">Terms</a></p>
+</footer>
+
+<script>
+  const nav = document.getElementById('nav');
+  window.addEventListener('scroll', () => {
+    nav.classList.toggle('scrolled', window.scrollY > 20);
+  });
+
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) entry.target.classList.add('visible');
+    });
+  }, { threshold: 0.1 });
+  document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+
+  document.getElementById('waitlistForm').addEventListener('submit', (e) => {
+    e.preventDefault();
+    document.getElementById('formContent').classList.add('hidden');
+    document.getElementById('successState').classList.remove('hidden');
+    // Tracking events fire here once pixels are wired
+  });
+</script>
+
+</body>
+</html>
